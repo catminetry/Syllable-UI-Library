@@ -32,11 +32,11 @@ function Library:Init(options)
 	options = Library:validate({
 		name = "Syllable"
 	}, options or {})
-	
+
 	local GUI = {
 		CurrentTab = nil
 	}
-	
+
 	--Main Frame
 	do
 		-- StarterGui.MyLibrary
@@ -153,8 +153,8 @@ function Library:Init(options)
 		GUI["c"]["Position"] = UDim2.new(0, 0, 1, 0);
 		GUI["c"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
 		GUI["c"]["Name"] = [[Line]];
-		
-		
+
+
 		-- StarterGui.MyLibrary.Main.ContentContainer
 		GUI["1b"] = Instance.new("Frame", GUI["2"]);
 		GUI["1b"]["BorderSizePixel"] = 0;
@@ -166,7 +166,7 @@ function Library:Init(options)
 		GUI["1b"]["Name"] = [[ContentContainer]];
 		GUI["1b"]["BackgroundTransparency"] = 1;
 	end
-	
+
 	--Navigation
 	do
 		-- StarterGui.MyLibrary.Main.Navigation
@@ -222,8 +222,8 @@ function Library:Init(options)
 		GUI["13"] = Instance.new("UIListLayout", GUI["11"]);
 		GUI["13"]["Padding"] = UDim.new(0, 1);
 		GUI["13"]["SortOrder"] = Enum.SortOrder.LayoutOrder;
-		
-		
+
+
 		-- StarterGui.MyLibrary.Main.Navigation.Line
 		GUI["1a"] = Instance.new("Frame", GUI["d"]);
 		GUI["1a"]["BorderSizePixel"] = 0;
@@ -233,19 +233,19 @@ function Library:Init(options)
 		GUI["1a"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
 		GUI["1a"]["Name"] = [[Line]];
 	end
-	
-	
+
+
 	function GUI:Tab(options)
 		options = Library:validate({
 			name = "Preview Tab",
 			icon = "rbxassetid://10888331510"
 		}, options or {})
-		
+
 		local Tab = {
 			Hover = false,
 			Active = false
 		}
-		
+
 		--Render
 		do
 			-- StarterGui.MyLibrary.Main.Navigation.ButtonHolder.Inactive
@@ -279,7 +279,7 @@ function Library:Init(options)
 			Tab["19"]["BackgroundTransparency"] = 1;
 			Tab["19"]["Name"] = [[Icon]];
 			Tab["19"]["Position"] = UDim2.new(0, -24, 0.5, 0);
-			
+
 			-- StarterGui.MyLibrary.Main.ContentContainer.HomeTab
 			Tab["1c"] = Instance.new("ScrollingFrame", GUI["1b"]);
 			Tab["1c"]["BorderSizePixel"] = 0;
@@ -291,20 +291,20 @@ function Library:Init(options)
 			Tab["1c"]["ScrollBarThickness"] = 0;
 			Tab["1c"]["BackgroundTransparency"] = 1;
 			Tab["1c"]["Visible"] = false;
-			
+
 			-- StarterGui.MyLibrary.Main.ContentContainer.HomeTab.UIPadding
 			Tab["23"] = Instance.new("UIPadding", Tab["1c"]);
 			Tab["23"]["PaddingTop"] = UDim.new(0, 2);
 			Tab["23"]["PaddingRight"] = UDim.new(0, 1);
 			Tab["23"]["PaddingLeft"] = UDim.new(0, 1);
 			Tab["23"]["PaddingBottom"] = UDim.new(0, 1);
-			
+
 			-- StarterGui.MyLibrary.Main.ContentContainer.HomeTab.UIListLayout
 			Tab["2a"] = Instance.new("UIListLayout", Tab["1c"]);
 			Tab["2a"]["Padding"] = UDim.new(0, 6);
 			Tab["2a"]["SortOrder"] = Enum.SortOrder.LayoutOrder;
 		end
-		
+
 		--Methods
 		function Tab:Activate()
 			if not Tab.Active then
@@ -316,12 +316,12 @@ function Library:Init(options)
 				Library:tween(Tab["19"], {ImageColor3 = Color3.fromRGB(255, 255, 255)})
 				Library:tween(Tab["17"], {BackgroundTransparency = 0.8})
 				Tab["1c"].Visible = true
-				
+
 				GUI.CurrentTab = Tab
 			end
-		
+
 		end
-		
+
 		function Tab:Deactivate()
 			if Tab.Active then
 				Tab.Active = false
@@ -332,7 +332,7 @@ function Library:Init(options)
 				Tab["1c"].Visible = false
 			end	
 		end
-		
+
 		--Logic
 		do
 			Tab["17"].MouseEnter:Connect(function()
@@ -367,18 +367,18 @@ function Library:Init(options)
 				Tab:Activate()
 			end
 		end
-		
+
 		function Tab:Button(options)
 			options = Library:validate({
 				name = "Preview Button",
 				callback = function() end
 			}, options or {})
-			
+
 			local Button = {
 				Hover = false,
 				MouseDown = false
 			}
-				
+
 			--Render
 			do
 				-- StarterGui.MyLibrary.Main.ContentContainer.HomeTab.Button
@@ -435,36 +435,36 @@ function Library:Init(options)
 				Button["22"]["Name"] = [[Icon]];
 				Button["22"]["Position"] = UDim2.new(1, 0, 0, 0);
 			end
-			
+
 			--Methods
 			function Button:SetText(text)
 				Button["20"].Text = text
 				options.name = text
 			end
-			
+
 			function Button:SetCallback(fn)
 				options.callback = fn
 			end
-			
+
 			--Logic
 			do
 				Button["1d"].MouseEnter:Connect(function()
 					Button.Hover = true
-					
+
 					Library:tween(Button["1f"], {Color = Color3.fromRGB(102, 102, 102)})
 				end)
-				
+
 				Button["1d"].MouseLeave:Connect(function()
 					Button.Hover = false
-					
+
 					if not Button.MouseDown then
 						Library:tween(Button["1f"], {Color = Color3.fromRGB(82, 82, 82)})
 					end
 				end)
-				
+
 				uis.InputBegan:Connect(function(input, gpe)
 					if gpe then return end
-					
+
 					if input.UserInputType == Enum.UserInputType.MouseButton1 and Button.Hover then
 						Button.MouseDown = true
 						Library:tween(Button["1d"], {BackgroundColor3 = Color3.fromRGB(57, 57, 57)})
@@ -472,13 +472,13 @@ function Library:Init(options)
 						options.callback()
 					end
 				end)
-				
+
 				uis.InputEnded:Connect(function(input, gpe)
 					if gpe then return end
 
 					if input.UserInputType == Enum.UserInputType.MouseButton1 then
 						Button.MouseDown = false
-						
+
 						if Button.Hover then
 							Library:tween(Button["1d"], {BackgroundColor3 = Color3.fromRGB(27, 27, 27)})
 							Library:tween(Button["1f"], {Color = Color3.fromRGB(102, 102, 102)})
@@ -486,22 +486,22 @@ function Library:Init(options)
 							Library:tween(Button["1d"], {BackgroundColor3 = Color3.fromRGB(27, 27, 27)})
 							Library:tween(Button["1f"], {Color = Color3.fromRGB(82, 82, 82)})
 						end
-					
+
 					end
 				end)
 			end
-				
-				
+
+
 			return Button
 		end
-		
+
 		function Tab:Warning(options)
 			options = Library:validate({
 				message = "Preview Warning"
 			}, options or {})
-			
+
 			local Warning = {}
-			
+
 			--Render
 			do
 				-- StarterGui.MyLibrary.Main.ContentContainer.HomeTab.Warning
@@ -521,7 +521,7 @@ function Library:Init(options)
 				-- StarterGui.MyLibrary.Main.ContentContainer.HomeTab.Warning.UIStroke
 				Warning["26"] = Instance.new("UIStroke", Warning["24"]);
 				Warning["26"]["Color"] = Color3.fromRGB(157, 128, 11);
-				
+
 				-- StarterGui.MyLibrary.Main.ContentContainer.HomeTab.Warning.Title
 				Warning["27"] = Instance.new("TextLabel", Warning["24"]);
 				Warning["27"]["BorderSizePixel"] = 0;
@@ -537,7 +537,7 @@ function Library:Init(options)
 				Warning["27"]["Name"] = [[Title]];
 				Warning["27"]["TextWrapped"] = true
 				Warning["27"]["TextYAlignment"] = Enum.TextYAlignment.Top
-				
+
 				-- StarterGui.MyLibrary.Main.ContentContainer.HomeTab.Warning.UIPadding
 				Warning["28"] = Instance.new("UIPadding", Warning["24"]);
 				Warning["28"]["PaddingTop"] = UDim.new(0, 6);
@@ -547,54 +547,54 @@ function Library:Init(options)
 
 
 				--StarterGui.MyLibrary.Main.ContentContainer.HomeTab.Warning.Icon
-		--		Warning["29"] = Instance.new("ImageLabel", Warning["27"]);
-		--		Warning["29"]["BorderSizePixel"] = 0;
-		--		Warning["29"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
-		--		Warning["29"]["ImageColor3"] = Color3.fromRGB(157, 128, 11);
-		--		Warning["29"]["AnchorPoint"] = Vector2.new(0, 0);
-		--		Warning["29"]["Image"] = [[rbxassetid://11419713314]];
-		--		Warning["29"]["Size"] = UDim2.new(0, 20, 0, 20);
-		--		Warning["29"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
-		--		Warning["29"]["BackgroundTransparency"] = 1;
-		--		Warning["29"]["Name"] = [[Icon]];
-		--		Warning["29"]["Position"] = UDim2.new(1, 0, -0.15, 0);
-				
+				--		Warning["29"] = Instance.new("ImageLabel", Warning["27"]);
+				--		Warning["29"]["BorderSizePixel"] = 0;
+				--		Warning["29"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+				--		Warning["29"]["ImageColor3"] = Color3.fromRGB(157, 128, 11);
+				--		Warning["29"]["AnchorPoint"] = Vector2.new(0, 0);
+				--		Warning["29"]["Image"] = [[rbxassetid://11419713314]];
+				--		Warning["29"]["Size"] = UDim2.new(0, 20, 0, 20);
+				--		Warning["29"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+				--		Warning["29"]["BackgroundTransparency"] = 1;
+				--		Warning["29"]["Name"] = [[Icon]];
+				--		Warning["29"]["Position"] = UDim2.new(1, 0, -0.15, 0);
+
 			end
-			
+
 			-- Methods
 			function Warning:SetText(text)
 				options.message = text
 				Warning:_update()
 			end
-			
+
 			function Warning:_update()
 				Warning["27"].Text = options.message
-				
+
 				Warning["27"].Size = UDim2.new(Warning["27"].Size.X.Scale, Warning["27"].Size.X.Offset, 0, math.huge)
 				Warning["27"].Size = UDim2.new(Warning["27"].Size.X.Scale, Warning["27"].Size.X.Offset, 0, Warning["27"].TextBounds.Y)
 				Warning["24"].Size = UDim2.new(Warning["24"].Size.X.Scale, Warning["24"].Size.X.Offset, 0, Warning["27"].TextBounds.Y + 12)
 				Library:tween(Warning["24"], {Size = UDim2.new(Warning["24"].Size.X.Scale, Warning["24"].Size.X.Offset, 0, Warning["27"].TextBounds.Y + 12)})
 			end
-			
-			
-			
+
+
+
 			Warning:_update()
 			return Warning
 		end
-		
-		
+
+
 		function Tab:Toggle(options)
 			options = Library:validate({
 				title = "Preview Toggle",
 				callback = function() end
 			}, options or {})
-			
+
 			local Toggle = {
 				Hover = false,
 				MouseDown = false,
 				State = false
 			}
-			
+
 			--Render
 			do
 				-- StarterGui.MyLibrary.Main.ContentContainer.HomeTab.ToggleInactive
@@ -672,7 +672,7 @@ function Library:Init(options)
 				Toggle["5b"]["Name"] = [[Checkmark]];
 				Toggle["5b"]["Position"] = UDim2.new(0.5, 0, 0.5, 0);
 			end
-			
+
 			--Methods
 			do
 				function Toggle:Toggle(b)
@@ -681,7 +681,7 @@ function Library:Init(options)
 					else
 						Toggle.State = b
 					end
-					
+
 					if Toggle.State then
 						Library:tween(Toggle["58"], {BackgroundColor3 = Color3.fromRGB(115, 191, 92)})
 						Library:tween(Toggle["5b"], {ImageTransparency = 0})
@@ -689,12 +689,12 @@ function Library:Init(options)
 						Library:tween(Toggle["58"], {BackgroundColor3 = Color3.fromRGB(64, 64, 64)})
 						Library:tween(Toggle["5b"], {ImageTransparency = 1})
 					end
-					
-					
+
+
 					options.callback(Toggle.State)
 				end
 			end
-			
+
 			--Logic
 			do
 				Toggle["53"].MouseEnter:Connect(function()
@@ -744,13 +744,13 @@ function Library:Init(options)
 					end
 				end)
 			end
-			
+
 			return Toggle
 		end
-		
-		
-		
-		
+
+
+
+
 		function Tab:Slider(options)
 			options = Library:validate({
 				title = "Preview Slider",
@@ -759,14 +759,14 @@ function Library:Init(options)
 				default = 50,
 				callback = function(v) print(v) end
 			}, options or {})
-			
+
 			local Slider = {
 				MouseDown = false,
 				Hover = false,
 				Connection = nil,
 				Options = options
 			}
-			
+
 			--Render
 			do
 				-- StarterGui.MyLibrary.Main.ContentContainer.HomeTab.Slider
@@ -860,13 +860,13 @@ function Library:Init(options)
 				-- StarterGui.MyLibrary.Main.ContentContainer.HomeTab.Slider.SliderBack.Draggable.UICorner
 				Slider["41"] = Instance.new("UICorner", Slider["40"]);
 			end
-			
+
 			--Methods
 			function Slider:SetValue(v)
 				if v == nil then
 					local percentage = math.clamp((mouse.X - Slider["37"].AbsolutePosition.X) / (Slider["37"].AbsoluteSize.X), 0, 1)
 					local value = math.floor(((options.max - options.min) * percentage) + options.min)
-				
+
 					Slider["3c"].Text = tostring(value)
 					Slider["40"].Size = UDim2.fromScale(percentage, 1)
 				else
@@ -875,11 +875,11 @@ function Library:Init(options)
 				end
 				options.callback(Slider:GetValue())
 			end
-			
+
 			function Slider:GetValue()
 				return tonumber(Slider["3c"].Text)
 			end
-			
+
 			--Logic
 			do
 				Slider["37"].MouseEnter:Connect(function()
@@ -909,7 +909,7 @@ function Library:Init(options)
 						Library:tween(Slider["39"], {Color = Color3.fromRGB(200, 200, 200)})
 						Library:tween(Slider["3e"], {Color = Color3.fromRGB(200, 200, 200)})
 						Library:tween(Slider["40"], {BackgroundColor3 = Color3.fromRGB(200, 200, 200)})
-						
+
 						if not Slider.Connection then
 							Slider.Connection = runService.RenderStepped:Connect(function()
 								Slider:SetValue()
@@ -935,18 +935,241 @@ function Library:Init(options)
 							Library:tween(Slider["3e"], {Color = Color3.fromRGB(82, 82, 82)})
 							Library:tween(Slider["40"], {BackgroundColor3 = Color3.fromRGB(82, 82, 82)})
 						end
-						
+
 						if Slider.Connection then Slider.Connection:Disconnect() end
 						Slider.Connection = nil
 					end
 				end)
 			end
-			
+
 			return Slider
 		end
+
+		function Tab:Dropdown(options)
+			options = Library:validate({
+				title = "Preview Dropdown",
+				callback = function(v) print(v) end,
+				items = {}
+			}, options or {})
+
+			local Dropdown = {
+				Items = {
+					["id"] = {
+						"value"
+					}
+				},
+				Open = false,
+				MouseDown = false,
+				Hover = false
+			}
+
+			--Render
+			do
+				-- StarterGui.MyLibrary.Main.ContentContainer.HomeTab.Dropdown
+				Dropdown["42"] = Instance.new("Frame", Tab["1c"]);
+				Dropdown["42"]["BorderSizePixel"] = 0;
+				Dropdown["42"]["BackgroundColor3"] = Color3.fromRGB(27, 27, 27);
+				Dropdown["42"]["ClipsDescendants"] = true;
+				Dropdown["42"]["Size"] = UDim2.new(1, 0, 0, 30);
+				Dropdown["42"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+				Dropdown["42"]["Name"] = [[Dropdown]];
+
+
+				-- StarterGui.MyLibrary.Main.ContentContainer.HomeTab.Dropdown.UICorner
+				Dropdown["43"] = Instance.new("UICorner", Dropdown["42"]);
+				Dropdown["43"]["CornerRadius"] = UDim.new(0, 4);
+
+
+				-- StarterGui.MyLibrary.Main.ContentContainer.HomeTab.Dropdown.UIStroke
+				Dropdown["44"] = Instance.new("UIStroke", Dropdown["42"]);
+				Dropdown["44"]["Color"] = Color3.fromRGB(82, 82, 82);
+
+
+				-- StarterGui.MyLibrary.Main.ContentContainer.HomeTab.Dropdown.Title
+				Dropdown["45"] = Instance.new("TextLabel", Dropdown["42"]);
+				Dropdown["45"]["BorderSizePixel"] = 0;
+				Dropdown["45"]["TextSize"] = 14;
+				Dropdown["45"]["TextXAlignment"] = Enum.TextXAlignment.Left;
+				Dropdown["45"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+				Dropdown["45"]["FontFace"] = Font.new([[rbxasset://fonts/families/Ubuntu.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+				Dropdown["45"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
+				Dropdown["45"]["BackgroundTransparency"] = 1;
+				Dropdown["45"]["Size"] = UDim2.new(1, -20, 0, 20);
+				Dropdown["45"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+				Dropdown["45"]["Text"] = options.title;
+				Dropdown["45"]["Name"] = [[Title]];
+
+
+				-- StarterGui.MyLibrary.Main.ContentContainer.HomeTab.Dropdown.UIPadding
+				Dropdown["46"] = Instance.new("UIPadding", Dropdown["42"]);
+				Dropdown["46"]["PaddingTop"] = UDim.new(0, 6);
+				Dropdown["46"]["PaddingRight"] = UDim.new(0, 6);
+				Dropdown["46"]["PaddingLeft"] = UDim.new(0, 6);
+				Dropdown["46"]["PaddingBottom"] = UDim.new(0, 6);
+
+
+				-- StarterGui.MyLibrary.Main.ContentContainer.HomeTab.Dropdown.Icon
+				Dropdown["47"] = Instance.new("ImageLabel", Dropdown["42"]);
+				Dropdown["47"]["BorderSizePixel"] = 0;
+				Dropdown["47"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+				Dropdown["47"]["AnchorPoint"] = Vector2.new(1, 0);
+				Dropdown["47"]["Image"] = [[rbxassetid://12974428978]];
+				Dropdown["47"]["Size"] = UDim2.new(0, 20, 0, 20);
+				Dropdown["47"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+				Dropdown["47"]["BackgroundTransparency"] = 1;
+				Dropdown["47"]["Name"] = [[Icon]];
+				Dropdown["47"]["Position"] = UDim2.new(1, 0, 0, 0);
+
+
+				-- StarterGui.MyLibrary.Main.ContentContainer.HomeTab.Dropdown.OptionHolder
+				Dropdown["48"] = Instance.new("Frame", Dropdown["42"]);
+				Dropdown["48"]["Visible"] = false;
+				Dropdown["48"]["BorderSizePixel"] = 0;
+				Dropdown["48"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+				Dropdown["48"]["Size"] = UDim2.new(1, 0, 1, -24);
+				Dropdown["48"]["Position"] = UDim2.new(0, 0, 0, 26);
+				Dropdown["48"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+				Dropdown["48"]["Name"] = [[OptionHolder]];
+				Dropdown["48"]["BackgroundTransparency"] = 1;
+
+
+				-- StarterGui.MyLibrary.Main.ContentContainer.HomeTab.Dropdown.OptionHolder.UIListLayout
+				Dropdown["49"] = Instance.new("UIListLayout", Dropdown["48"]);
+				Dropdown["49"]["Padding"] = UDim.new(0, 4);
+				Dropdown["49"]["SortOrder"] = Enum.SortOrder.LayoutOrder;
+			end
+
+
+
+
+
+			--Methods
+
+			function Dropdown:Add(id, value)
+				Dropdown.Items[id] = {
+					instance = {},
+					value = value
+				}
+				-- StarterGui.MyLibrary.Main.ContentContainer.HomeTab.Dropdown.OptionHolder.Inactive Option
+				Dropdown.Items[id].instance["4a"] = Instance.new("TextLabel", Dropdown["48"]);
+				Dropdown.Items[id].instance["4a"]["BorderSizePixel"] = 0;
+				Dropdown.Items[id].instance["4a"]["TextSize"] = 12;
+				Dropdown.Items[id].instance["4a"]["BackgroundColor3"] = Color3.fromRGB(57, 57, 57);
+				Dropdown.Items[id].instance["4a"]["FontFace"] = Font.new([[rbxasset://fonts/families/Ubuntu.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+				Dropdown.Items[id].instance["4a"]["TextColor3"] = Color3.fromRGB(203, 203, 203);
+				Dropdown.Items[id].instance["4a"]["Size"] = UDim2.new(1, 0, 0, 16);
+				Dropdown.Items[id].instance["4a"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+				Dropdown.Items[id].instance["4a"]["Text"] = id;
+				Dropdown.Items[id].instance["4a"]["Name"] = [[Inactive_Option]];
+
+
+				-- StarterGui.MyLibrary.Main.ContentContainer.HomeTab.Dropdown.OptionHolder.Inactive Option.UIStroke
+				Dropdown.Items[id].instance["4b"] = Instance.new("UIStroke", Dropdown.Items[id].instance["4a"]);
+				Dropdown.Items[id].instance["4b"]["Color"] = Color3.fromRGB(82, 82, 82);
+				Dropdown.Items[id].instance["4b"]["ApplyStrokeMode"] = Enum.ApplyStrokeMode.Border;
+
+
+				-- StarterGui.MyLibrary.Main.ContentContainer.HomeTab.Dropdown.OptionHolder.Inactive Option.UICorner
+				Dropdown.Items[id].instance["4c"] = Instance.new("UICorner", Dropdown.Items[id].instance["4a"]);
+				Dropdown.Items[id].instance["4c"]["CornerRadius"] = UDim.new(0, 2);
+
+			end
+
+			function Dropdown:Remove(id)
+				if Dropdown.Items[id] ~= nil then
+					for i, v in pairs(Dropdown.Items[id].instance) do
+						v:Destroy()
+					end
+					Dropdown.Items[id] = nil
+				end
+			end
+
+			function Dropdown:Clear()
+				for i, v in pairs(Dropdown.Items) do
+					Dropdown:Remove(i)
+				end
+			end
+
+			function Dropdown:Toggle()
+				if Dropdown.Open then
+					Library:tween(Dropdown["42"], {Size = UDim2.new(1, 0, 0, 30)}, function()
+						Dropdown["48"].Visible = false
+					end)
+				else
+					local count = 0
+					for i, v in pairs(Dropdown.Items) do
+						if v ~= nil then
+							count += 1
+						end
+					end
+
+					Dropdown["48"].Visible = true
+					Library:tween(Dropdown["42"], {Size = UDim2.new(1, 0, 0, 30 + (count * 24) + 4)})
+				end
+				Dropdown.Open = not Dropdown.Open
+			end
+
+
+			--Logic
+			do
+				Dropdown["42"].MouseEnter:Connect(function()
+					Dropdown.Hover = true
+
+					Library:tween(Dropdown["44"], {Color = Color3.fromRGB(102, 102, 102)})
+				end)
+
+				Dropdown["42"].MouseLeave:Connect(function()
+					Dropdown.Hover = false
+
+					if not Dropdown.MouseDown then
+						Library:tween(Dropdown["44"], {Color = Color3.fromRGB(82, 82, 82)})
+					end
+				end)
+
+				uis.InputBegan:Connect(function(input, gpe)
+					if gpe then return end
+
+					if input.UserInputType == Enum.UserInputType.MouseButton1 and Dropdown.Hover then
+						Dropdown.MouseDown = true
+						Library:tween(Dropdown["42"], {BackgroundColor3 = Color3.fromRGB(57, 57, 57)})
+						Library:tween(Dropdown["44"], {Color = Color3.fromRGB(200, 200, 200)})
+						Dropdown:Toggle()
+					end
+				end)
+
+				uis.InputEnded:Connect(function(input, gpe)
+					if gpe then return end
+
+					if input.UserInputType == Enum.UserInputType.MouseButton1 then
+						Dropdown.MouseDown = false
+
+						if Dropdown.Hover then
+							Library:tween(Dropdown["42"], {BackgroundColor3 = Color3.fromRGB(27, 27, 27)})
+							Library:tween(Dropdown["44"], {Color = Color3.fromRGB(102, 102, 102)})
+						else
+							Library:tween(Dropdown["42"], {BackgroundColor3 = Color3.fromRGB(27, 27, 27)})
+							Library:tween(Dropdown["44"], {Color = Color3.fromRGB(82, 82, 82)})
+						end
+
+					end
+				end)
+			end
+
+
+
+			return Dropdown
+
+
+		end
+
+
+
+
+
 		return Tab
 	end
-	
+
 	return GUI
 end
 return Library
+
