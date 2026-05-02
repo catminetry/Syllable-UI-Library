@@ -37,6 +37,9 @@ function Library:Init(options)
 		CurrentTab = nil
 	}
 
+
+
+
 	--Main Frame
 	do
 		-- StarterGui.MyLibrary
@@ -54,6 +57,17 @@ function Library:Init(options)
 		GUI["2"]["Position"] = UDim2.fromOffset((viewport.X/2) - (GUI["2"].Position.X.Offset + GUI["2"].Size.X.Offset / 2), (viewport.Y/2) - (GUI["2"].Position.Y.Offset + GUI["2"].Size.Y.Offset / 2));
 		GUI["2"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
 		GUI["2"]["Name"] = [[Main]];
+
+		uis.InputBegan:Connect(function(input)
+			if input.KeyCode == Enum.KeyCode.RightShift then
+				if GUI["2"].Visible == false then
+					GUI["2"].Visible = true
+				else
+					GUI["2"].Visible = false
+				end
+			end
+		end)
+		
 
 
 		-- StarterGui.MyLibrary.Main.UICorner
@@ -93,7 +107,6 @@ function Library:Init(options)
 		GUI["6"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
 		GUI["6"]["Name"] = [[TopBar]];
 
-
 		-- StarterGui.MyLibrary.Main.TopBar.UICorner
 		GUI["7"] = Instance.new("UICorner", GUI["6"]);
 		GUI["7"]["CornerRadius"] = UDim.new(0, 6);
@@ -130,18 +143,35 @@ function Library:Init(options)
 		GUI["a"]["PaddingTop"] = UDim.new(0, 1);
 		GUI["a"]["PaddingLeft"] = UDim.new(0, 8);
 
+		-- StarterGui.MyLibrary.Main.TopBar.Minimize
+		--GUI["b"] = Instance.new("ImageLabel", GUI["6"]);
+		--GUI["b"]["BorderSizePixel"] = 0;
+		--GUI["b"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+		--GUI["b"]["AnchorPoint"] = Vector2.new(1, 0.5);
+		--GUI["b"]["Image"] = [[rbxassetid://122491219592184]];
+		--GUI["b"]["Size"] = UDim2.new(0, 18, 0, 18);
+		--GUI["b"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+		--GUI["b"]["BackgroundTransparency"] = 1;
+		--GUI["b"]["Name"] = [[Minimize]];
+		--GUI["b"]["Position"] = UDim2.new(1, -6, 0.5, 0);
 
 		-- StarterGui.MyLibrary.Main.TopBar.Minimize
-		GUI["b"] = Instance.new("ImageLabel", GUI["6"]);
+		GUI["b"] = Instance.new("ImageButton", GUI["6"]);
+		GUI["b"]["Active"] = false;
 		GUI["b"]["BorderSizePixel"] = 0;
+		GUI["b"]["BackgroundTransparency"] = 1;
 		GUI["b"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+		GUI["b"]["Selectable"] = false;
 		GUI["b"]["AnchorPoint"] = Vector2.new(1, 0.5);
 		GUI["b"]["Image"] = [[rbxassetid://122491219592184]];
 		GUI["b"]["Size"] = UDim2.new(0, 18, 0, 18);
 		GUI["b"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
-		GUI["b"]["BackgroundTransparency"] = 1;
 		GUI["b"]["Name"] = [[Minimize]];
 		GUI["b"]["Position"] = UDim2.new(1, -6, 0.5, 0);
+		GUI["b"]["MouseButton1Click"]:Connect(function()
+			
+			GUI["2"].Visible = false
+		end)
 
 
 		-- StarterGui.MyLibrary.Main.TopBar.Line
@@ -166,6 +196,9 @@ function Library:Init(options)
 		GUI["1b"]["Name"] = [[ContentContainer]];
 		GUI["1b"]["BackgroundTransparency"] = 1;
 	end
+
+
+
 
 	--Navigation
 	do
@@ -1046,6 +1079,15 @@ function Library:Init(options)
 			--Methods
 
 			function Dropdown:Add(id, value)
+				local Item = {
+					Hover = true,
+					MouseDown = false
+				}
+				
+				if Dropdown.Items[id] then
+					return warn("Item already exists")
+				end
+				
 				Dropdown.Items[id] = {
 					instance = {},
 					value = value
@@ -1072,9 +1114,24 @@ function Library:Init(options)
 				-- StarterGui.MyLibrary.Main.ContentContainer.HomeTab.Dropdown.OptionHolder.Inactive Option.UICorner
 				Dropdown.Items[id].instance["4c"] = Instance.new("UICorner", Dropdown.Items[id].instance["4a"]);
 				Dropdown.Items[id].instance["4c"]["CornerRadius"] = UDim.new(0, 2);
+				
+				
+				
+				
+				--====[[IDK]]====--
+				
+				--dropdown select
+				
+				--======if i can seeeeeeeeeeeeeeee======--
+				
+				
+				
 
 			end
 
+
+
+			--Methods??
 			function Dropdown:Remove(id)
 				if Dropdown.Items[id] ~= nil then
 					for i, v in pairs(Dropdown.Items[id].instance) do
@@ -1104,7 +1161,7 @@ function Library:Init(options)
 					end
 
 					Dropdown["48"].Visible = true
-					Library:tween(Dropdown["42"], {Size = UDim2.new(1, 0, 0, 30 + (count * 24) + 4)})
+					Library:tween(Dropdown["42"], {Size = UDim2.new(1, 0, 0, 30 + (count * 16) + 1)})
 				end
 				Dropdown.Open = not Dropdown.Open
 			end
